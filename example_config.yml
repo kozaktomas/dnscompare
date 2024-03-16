@@ -1,0 +1,11 @@
+# Example configuration file for DNS resolver
+# Comparing Cloudflare and Google DNS servers
+# For following records: A, CNAME, MX, TXT
+nameservers:
+  - "1.1.1.1:53"
+  - "8.8.8.8:53"
+records:
+  - "A google.com"
+  - "CNAME google.com"
+  - "MX gmail.com"
+  - "TXT google.com"

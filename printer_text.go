@@ -29,19 +29,19 @@ func (printer TextResultPrinter) PrintColors(result DnsResult) {
 	headingColor := color.New(color.FgGreen)
 	if !result.Identical {
 		headingColor = color.New(color.FgRed)
-		headingColor.Println("DIFFERENT")
+		_, _ = headingColor.Println("DIFFERENT")
 	}
-	headingColor.Println(fmt.Sprintf("%s -> %s", result.Type, result.Host))
+	_, _ = headingColor.Println(fmt.Sprintf("%s -> %s", result.Type, result.Host))
 
 	recordColor := color.New(color.FgYellow)
 	nameserverColor := color.New(color.FgCyan)
 	for _, response := range result.Responses {
-		recordColor.Print(response.Value)
+		_, _ = recordColor.Print(response.Value)
 		if response.Value == "" {
-			recordColor.Print("EMPTY")
+			_, _ = recordColor.Print("EMPTY")
 		}
 		fmt.Print(" <==> ")
-		nameserverColor.Println(response.Resolver)
+		_, _ = nameserverColor.Println(response.Resolver)
 	}
 	fmt.Println("---")
 }

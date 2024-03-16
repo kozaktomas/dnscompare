@@ -17,7 +17,6 @@ Flags:
   -h, --help        help for dnscompare
       --identical   print identical results as well
       --json        print results in JSON format
-      --no-colors   disable colors in the output
 ```
 
 ## Configuration example

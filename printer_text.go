@@ -6,26 +6,28 @@ import (
 )
 
 type TextResultPrinter struct {
-	NoColors  bool
 	Identical bool
 }
 
 func (printer TextResultPrinter) Print(results []DnsResult) {
+	diffCount := 0
 	for _, result := range results {
 
 		if !printer.Identical && result.Identical {
 			continue
 		}
 
-		if printer.NoColors {
-			printer.PrintNoColors(result)
-		} else {
-			printer.PrintColors(result)
-		}
+		printer.printResult(result)
+		diffCount++
+	}
+
+	if !printer.Identical && diffCount == 0 {
+		greenColor := color.New(color.FgGreen)
+		_, _ = greenColor.Println("All records are identical")
 	}
 }
 
-func (printer TextResultPrinter) PrintColors(result DnsResult) {
+func (printer TextResultPrinter) printResult(result DnsResult) {
 	headingColor := color.New(color.FgGreen)
 	if !result.Identical {
 		headingColor = color.New(color.FgRed)
@@ -42,23 +44,6 @@ func (printer TextResultPrinter) PrintColors(result DnsResult) {
 		}
 		fmt.Print(" <==> ")
 		_, _ = nameserverColor.Println(response.Resolver)
-	}
-	fmt.Println("---")
-}
-
-func (printer TextResultPrinter) PrintNoColors(result DnsResult) {
-	if !result.Identical {
-		fmt.Println("DIFFERENT")
-	}
-	fmt.Println(fmt.Sprintf("%s -> %s", result.Type, result.Host))
-
-	for _, response := range result.Responses {
-		fmt.Print(response.Value)
-		if response.Value == "" {
-			fmt.Print("EMPTY")
-		}
-		fmt.Print(" <==> ")
-		fmt.Println(response.Resolver)
 	}
 	fmt.Println("---")
 }

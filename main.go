@@ -22,7 +22,6 @@ type Record struct {
 
 const (
 	ParamJson      = "json"
-	ParamNoColors  = "no-colors"
 	ParamIdentical = "identical"
 )
 
@@ -101,7 +100,6 @@ func main() {
 				printer.Print(results)
 			} else {
 				printer := TextResultPrinter{
-					NoColors:  ignoreErrBool(cmd.Flags().GetBool(ParamNoColors)),
 					Identical: ignoreErrBool(cmd.Flags().GetBool(ParamIdentical)),
 				}
 				printer.Print(results)
@@ -110,7 +108,6 @@ func main() {
 	}
 
 	rootCmd.PersistentFlags().Bool(ParamJson, false, "print results in JSON format")
-	rootCmd.PersistentFlags().Bool(ParamNoColors, false, "disable colors in the output")
 	rootCmd.PersistentFlags().Bool(ParamIdentical, false, "print identical results as well")
 
 	if err := rootCmd.Execute(); err != nil {
